@@ -1,0 +1,68 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>ASP.NET MVC Image Resize</h1>
+    <p class="lead">MVCImageResize helps resize images on the server side in a MVC controller</p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>ASP.NET MVC</h2>
+        <p>
+            MVC controller helps build a new image from the existing image based on resize type provided by user. The application can be used within upload process to build thumbnails at the same time.
+        </p>
+    </div>
+    <div class="col-md-4">
+        <h2>jQuery/Ajax</h2>
+        <p>The result of resize process will be sent back to the controller by JSON and shows the status of the process and the src of the thumbnail which has been created.</p>
+    </div>
+    <div class="col-md-4">
+        <h2>Free to use</h2>
+        <p>
+            License free project.
+            and example has benn provided below.
+            <br />
+            <br />
+            <strong>**Important : give read/write access the application pool user on desired Image repository folder.</strong>
+        </p>
+    </div>
+</div>
+
+<div class="row">
+
+
+    @using (Ajax.BeginForm("Index", "Home", new AjaxOptions() { HttpMethod = "POST" }, new { enctype = "multipart/form-data" }))
+    {
+
+        <div class="col-xs-12 col-md-4">
+            @Html.TextBox("resizeValueText", null, new { @class = "form-control", required = "", type = "number", placeholder = "enter a number" })
+        </div>
+        <div class="col-xs-12 col-md-4">
+            @Html.DropDownList("resizeTypeSelect", EnumHelper.GetSelectList(typeof(MVCImageResizer.Models.MVCImageResizeTypes)), "select resize type", new { @class = "form-control", required = "Select my Type" })
+        </div>
+        <div class="col-xs-12 col-md-4">
+            <input type="hidden" id="resizeFileName" name="resizeFileName" value="testImage.jpg" />
+            <input type="submit" value="Resize" class="btn btn-primary btn-lg" />
+        </div>
+
+    }
+
+</div>
+
+<div class="row row-custom-margin">
+    <div class="col-xs-12 text-center">
+        <img src="../ImagesRepo/testImage.jpg" class="image-preview" />
+    </div>
+</div>
+
+<div class="row row-custom-margin" id="resultDiv">
+
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/jquery.form.js"></script>
+    <script src="~/Scripts/ImageResize.js"></script>
+}
